@@ -73,14 +73,14 @@ if (form) {
         headers: { Accept: "application/json" },
         body: new FormData(form),
       });
-      const data = await res.json();
-      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || "Failed");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success) !== "true") throw new Error(data.message || `Server responded with status ${res.status}`);
       form.reset();
       status.classList.add("ok");
       status.textContent = "Thank you! Your enquiry has been sent. We'll get back to you soon.";
     } catch (err) {
       status.classList.add("err");
-      status.textContent = "Sorry, the enquiry could not be sent. Please email info@flextechautomation.org or call +91-7840829782.";
+      status.textContent = `Sorry, the enquiry could not be sent (${err.message}). Please email info@flextechautomation.org or call +91-7840829782.`;
     } finally {
       button.disabled = false;
     }
