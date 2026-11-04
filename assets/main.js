@@ -68,7 +68,7 @@ if (form) {
     status.className = "form-status";
     status.textContent = "Sending...";
     try {
-      const res = await fetch(form.action.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+      const res = await fetch(form.action, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: new FormData(form),
